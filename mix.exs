@@ -1,3 +1,4 @@
+# mix.exs
 defmodule Ppp.MixProject do
   use Mix.Project
 
@@ -9,14 +10,12 @@ defmodule Ppp.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      listeners: [Phoenix.CodeReloader]
+      deps: deps()
+      # Removed: listeners: [Phoenix.CodeReloader]
     ]
   end
 
   # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
   def application do
     [
       mod: {Ppp.Application, []},
@@ -29,17 +28,14 @@ defmodule Ppp.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.0"}, # Use stable 1.7.x (resolves to 1.7.21)
+      {:phoenix, "~> 1.7.0"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.11"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.20.0"}, # Downgrade to match Phoenix 1.7 compatibility
+      {:phoenix_live_view, "~> 0.20.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
@@ -59,17 +55,12 @@ defmodule Ppp.MixProject do
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:recaptcha, "~> 3.0"}, # CAPTCHA
-      {:paginator, "~> 1.2"} # Pagination
+      {:recaptcha, "~> 3.0"},
+      {:paginator, "~> 1.2"}
     ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],

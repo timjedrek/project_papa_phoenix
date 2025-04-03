@@ -1,3 +1,4 @@
+# config/dev.exs
 import Config
 
 # Configure your database
@@ -10,23 +11,24 @@ config :ppp, Ppp.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-# For development, we disable any cache and enable
-# debugging and code reloading.
-#
-# The watchers configuration can be used to run external
-# watchers to your application. For example, we can use it
-# to bundle .js and .css sources.
+# For development, we disable any cache and enable debugging
 config :ppp, PppWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
-  check_origin: false,
-  code_reloader: true,
   debug_errors: true,
+  code_reloader: false, # Disable code reloading
+  check_origin: false,
   secret_key_base: "80qNbDEw8OQVrNkOIl2+tl+RHmRcqWvBKM2ZSz2En+cP254QFiqt3Oz9UO0L2qH0",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:ppp, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:ppp, ~w(--watch)]}
+  ],
+  live_reload: [
+    web_console_logger: true,
+    patterns: [
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/ppp_web/(controllers|live|components)/.*(ex|heex)$"
+    ]
   ]
 
 # ## SSL Support
@@ -51,17 +53,6 @@ config :ppp, PppWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
-
-# Watch static and templates for browser reloading.
-config :ppp, PppWeb.Endpoint,
-  live_reload: [
-    web_console_logger: true,
-    patterns: [
-      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/ppp_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
-  ]
 
 # Enable dev routes for dashboard and mailbox
 config :ppp, dev_routes: true
